@@ -6,9 +6,6 @@ import {
   saveProducto, 
   deleteProducto, 
   updateProducto, 
-  savePedido,
-  deletePedido,
-  getPedidos
 } from "../controllers/productos";
 
 const router = Router()
@@ -74,9 +71,5 @@ router.delete('/productos/:id', deleteProducto)
  */
 router.put('/productos/:id', updateProducto)
 
-router.get('/pedidos', getPedidos)
 
-router.post('/pedidos', savePedido)
-
-router.delete('pedidos/:id', deletePedido)
 export default router
