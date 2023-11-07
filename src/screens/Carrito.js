@@ -1,11 +1,11 @@
 import React from "react"; 
-import { ScrollView, View, Image, TouchableOpacity } from "react-native";
+import { ScrollView, View, Image } from "react-native";
 import { useTheme, Button, Text, Appbar } from "react-native-paper";
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useNavigation  } from "@react-navigation/native"
 import { useDispatch, useSelector } from "react-redux";
 import { decrementQuantity, incrementQuantity } from "../../CartReducer";
+import EmptyCart from "../components/EmptyCart";
+import QuantityButton from "../components/QuantityButton";
 
 const Carrito = () => {
 
@@ -34,8 +34,6 @@ const Carrito = () => {
       dispatch(decrementQuantity(item))
     }
   }
-  
-  
 
   const itemsInCart = cart.length
 
@@ -48,30 +46,7 @@ const Carrito = () => {
       </Appbar.Header>
       {(itemsInCart == 0) ? (
         <View style={{ flex: 1 }}>
-          <View 
-            style={{
-              flex: 1,
-              paddingHorizontal: 40,
-            }}>
-            <View style={{
-              flex:0.9,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <MaterialCommunityIcons name={'cart-variant'} color={ theme.colors.onBackground } size={100} />
-              <Text variant="headlineMedium" style={{ color: theme.colors.onBackground, marginTop: 30 }}>Tu carrito está vacío</Text>
-              <Text variant="bodyMedium" style={{ color: theme.colors.onBackground }}>No agregaste nada al carrito todavía</Text>
-              <Button 
-                mode="elevated" 
-                icon={({ color }) => ( <Ionicons name={'book'} color={color} size={24} /> )}
-                buttonColor={ theme.colors.primary }
-                textColor={ theme.colors.onPrimary }
-                onPress={ goToMenu }
-                style={{ width:'100%', marginTop: 20 }}
-              >Ver menú</Button>
-            </View>    
-          </View>
+          <EmptyCart onPress={goToMenu}/>
         </View>
       ) : (
         <View style={{flex: 1}}>
@@ -104,58 +79,9 @@ const Carrito = () => {
                     alignItems: 'center',
                   }}>
                     <Text style={{marginBottom: 5}} variant="titleMedium">${(item.precio)*(item.quantity)}</Text>
-                    <View style={{ height: 32, width: 95, display: 'flex', flexDirection:'row'}}>
-                      <TouchableOpacity onPress={() => decreaseQuantity(item)} disabled={item.quantity == 1} > 
-                        <View style={{
-                            backgroundColor: theme.colors.secondaryContainer,
-                            flex: 1,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            paddingLeft: 7,
-                            paddingHorizontal: 5,
-                            borderTopLeftRadius: 50, 
-                            borderBottomLeftRadius: 50,
-                            borderWidth: 1, 
-                            borderColor: theme.colors.outline,
-                            borderRightWidth: 0
-                          }}>
-                          <MaterialCommunityIcons name='minus' color={theme.colors.primary} size={18} />
-                        </View>
-                      </TouchableOpacity>
-
-                      <View style={{
-                        flex: 1, 
-                        display:'flex', 
-                        justifyContent:'center', 
-                        alignItems:'center',
-                        borderWidth: 1,
-                        borderColor: theme.colors.outline
-                        }}>
-                        <Text style={{color: theme.colors.onSurface}}>{item.quantity}</Text>
-                      </View>
-
-                      <TouchableOpacity onPress={() => increaseQuantity(item)}> 
-                        <View style={{
-                            backgroundColor: theme.colors.secondaryContainer,
-                            flex: 1,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderTopRightRadius: 50, 
-                            borderBottomRightRadius: 50, 
-                            paddingRight: 7,
-                            paddingHorizontal: 5,
-                            margin:0,
-                            borderWidth: 1, 
-                            borderColor: theme.colors.outline,
-                            borderLeftWidth: 0,
-                          }}>
-                          <MaterialCommunityIcons name='plus' color={theme.colors.primary} size={18} />
-                        </View>
-                      </TouchableOpacity>
-
-                    </View>
+                    
+                    <QuantityButton increaseQuantity={()=>increaseQuantity(item)} decreaseQuantity={()=>decreaseQuantity(item)} quantity={item.quantity}/>
+                    
                   </View>   
                 </View>
             )})}

@@ -8,10 +8,12 @@ import { Provider, useSelector } from 'react-redux';
 import store from './Store';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+
 import Resumen from './src/screens/Resumen';
 import Menu from './src/screens/Menu';
 import Pedidos from './src/screens/Pedidos';
 import Carrito from './src/screens/Carrito';
+import PedidoItems from './src/screens/PedidoItems';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -75,6 +77,7 @@ export default function App () {
           <Stack.Navigator screenOptions={{ headerShown: false, statusBarTranslucent: true }}>
             <Stack.Screen name='Home' component={ BottomNav } />
             <Stack.Screen name='Resumen' component={ Resumen } />
+            <Stack.Screen name='PedidoItems' component={ PedidoItems } />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
