@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect, memo } from "react"; 
 import { View, TouchableOpacity, ScrollView, Image, RefreshControl } from "react-native";
-import { useTheme, Appbar, Text, Button } from "react-native-paper";
+import { useTheme, Appbar, Text, Button, ActivityIndicator } from "react-native-paper";
 import { Tabs, TabScreen, TabsProvider } from 'react-native-paper-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,11 @@ import { getProductos } from "../../api";
 
 const Menu = () => {
 
+  const theme = useTheme();
+  const dispatch = useDispatch()
+  const cart = useSelector((state) => state.cart.cart)
+  console.log(cart)
+  
   const [productos, setProductos] = useState([])
   const [refresing, setRefresing] = useState(false)
 
@@ -21,19 +26,13 @@ const Menu = () => {
   useEffect(() => {
     loadProductos()
   }, [])
-    
-
-  const theme = useTheme();
-  
-  const cart = useSelector((state) => state.cart.cart)
-  console.log(cart)
-  const dispatch = useDispatch()
 
   const addItemToCart = (item) => {
     dispatch(addToCart(item))
   }
 
   const removeItemFromCart = (item) => {
+    
     dispatch(removeFromCart(item))
   }
 
@@ -52,7 +51,7 @@ const Menu = () => {
         <TabScreen label="Comidas" icon="food">
           <View style={{ backgroundColor: theme.colors.background, flex: 1 }}>
             <ScrollView 
-              style={{ backgroundColor: theme.colors.background, flex: 1, margin: 16 }} 
+              style={{ backgroundColor: theme.colors.background, flex: 1, paddingHorizontal: 16, marginTop: 16 }} 
               showsVerticalScrollIndicator={false}
               refreshControl={
                 <RefreshControl
@@ -134,4 +133,4 @@ const Menu = () => {
   )
 }
 
-export default Menu;
+export default memo(Menu);

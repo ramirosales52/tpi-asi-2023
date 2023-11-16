@@ -48,7 +48,11 @@ const PedidoItems = ({ route }) => {
               borderRadius: 16,
               marginBottom: 12,
             }}>
+              <Text>{item.itempedido_id}</Text>
               <Text>{item.product_name}</Text>
+              <Text>${item.price}</Text>
+              <Text>${item.subtotal}</Text>
+              <Text>x{item.quantity}</Text>
             </View>
           ))}
         </ScrollView>

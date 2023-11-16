@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"; 
-import { View, ScrollView, RefreshControl, TouchableOpacity } from "react-native";
-import { useTheme, Appbar, Text} from "react-native-paper";
+import React, { memo, useEffect, useState } from "react"; 
+import { View, ScrollView, RefreshControl, TouchableOpacity, VirtualizedList } from "react-native";
+import { useTheme, Appbar, Text, ActivityIndicator} from "react-native-paper";
 import { useNavigation  } from "@react-navigation/native"
 import { getPedidos } from "../../api";
 
@@ -11,9 +11,12 @@ const Pedidos = () => {
 
   const [pedidos, setPedidos] = useState([])
   const [refresing, setRefresing] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const loadPedidos = async () => {
+    setIsLoading(true)
     const data = await getPedidos()
+    setIsLoading(false)
     setPedidos(data)
   }
 
@@ -40,20 +43,16 @@ const Pedidos = () => {
        <Appbar.Content title="Pedidos" color={theme.colors.inverseSurface} />
       </Appbar.Header>
 
-      <View style={{flex: 1}}>
-        <ScrollView 
-          style={{ backgroundColor: theme.colors.background, flex: 1, margin: 16, marginBottom: 0 }} 
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl
-              refreshing={refresing}
-              onRefresh={onRefresh}
-            />}
-          >
-          {pedidos.map((item, index) => (
-            <TouchableOpacity onPress={() => goToPedidoItems(item.id)} activeOpacity={0.7}>
+      <View style={{ flex: 1 }}>
+        {isLoading ?  (
+          <ActivityIndicator animating={ true } size={"large"} color={theme.colors.onBackground} style={{marginTop: 16}}/>
+          ) : (
+            <VirtualizedList
+            style={{ backgroundColor: theme.colors.background, paddingHorizontal: 16, marginTop: 16}}
+            data={pedidos}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity key={index} onPress={() => goToPedidoItems(item.id)} activeOpacity={0.7}>
               <View 
-                key={index} 
                 style={{
                   backgroundColor: theme.colors.surfaceVariant, 
                   height: 98, 
@@ -96,11 +95,19 @@ const Pedidos = () => {
                 </View>
               </View>
             </TouchableOpacity>
-          ))}
-        </ScrollView>
+          )}
+          keyExtractor={(item) => item.id.toString()}
+          getItem={(data, index) => data[index]}
+          getItemCount={(data) => data.length}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refresing} onRefresh={onRefresh} />
+          }
+        />
+        )}
       </View>
     </View>
   )
 }
 
-export default Pedidos;
+export default memo(Pedidos);

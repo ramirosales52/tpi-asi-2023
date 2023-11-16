@@ -1,4 +1,4 @@
-const IP = 'http://192.168.0.244:3000/'
+const IP = 'http://192.168.0.244:3001/'
 
 export const getProductos = async () => {
   const res = await fetch(IP + 'productos')
