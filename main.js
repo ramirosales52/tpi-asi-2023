@@ -14,7 +14,7 @@ function createWindow () {
   })
 
   if (isDev) {
-    win.loadURL('http://localhost:3000')
+    win.loadURL('http://localhost:3000/pedidos')
   } else {
     win.loadFile("src/build/index.html")
   }

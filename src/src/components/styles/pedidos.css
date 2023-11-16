@@ -1,0 +1,14 @@
+.pedidos {
+  min-height: calc(100vh - 50px);
+  max-height: calc(100vh - 50px);
+}
+
+.select{
+  padding: 0 32px 0 8px!important;
+  background-color: white;
+  border: 2px solid #cfcfcf;
+  border-radius: 6px;
+  transition: all 0.3s;
+  outline: none;
+}
+
