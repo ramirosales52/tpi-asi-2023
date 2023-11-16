@@ -3,7 +3,7 @@ import { connect } from '../database'
 
 export const getPedidos = async (req, res) => {
   const connection = await connect()
-  const [rows] = await connection.query('SELECT * FROM pedidos')
+  const [rows] = await connection.query('SELECT * FROM pedidos ORDER BY id desc')
   res.json(rows)
 }
 
