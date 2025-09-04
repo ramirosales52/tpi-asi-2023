@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Cantina UTN",
+    "slug": "cantina-tpi-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#f4a605"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/adaptive-icon.png",
+        "backgroundColor": "#f4a605"
+      },
+      "package": "com.rxma.cantinatpiapp"
+    },
+    "web": {
+      "favicon": "./src/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "816bbaf3-6d47-48df-a4d3-9ceb1aa934f6"
+      }
+    }
+  }
+}
